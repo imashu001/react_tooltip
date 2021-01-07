@@ -1,25 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Tooltip from "./Tooltip";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      showTtip: false,
+      position: "top",
+    };
+  }
+  togglettip = (e) => {
+    this.setState({
+      showTtip: !this.state.showTtip,
+    });
+  };
+  handleChange = (e) => {
+    const a = e.target.value;
+    console.log(a);
+    if (a !== null) {
+      this.setState({
+        position: a,
+      });
+    }
+  };
+  render() {
+    return (
+      <div className="App">
+        <input
+          type="text"
+          onChange={this.handleChange}
+          value={this.state.position}
+          placeholder="Position"
+        />
+        <br />
+        <br />
+        <p>Default postion of tooltip is bottom</p>
+        <p> Current position of tooltip is {this.state.position}</p>
+        <div
+          className="ttip"
+          onMouseOver={this.togglettip}
+          onMouseOut={this.togglettip}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          Hover
+          {this.state.showTtip && <Tooltip position={this.state.position} />}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
